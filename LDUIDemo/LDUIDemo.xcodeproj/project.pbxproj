@@ -18,6 +18,7 @@
 		CB78FB212139195E00D6A4CA /* LDRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB78FB202139195E00D6A4CA /* LDRootViewController.m */; };
 		CB78FB2521391A0700D6A4CA /* MarqueeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB78FB2421391A0700D6A4CA /* MarqueeViewController.m */; };
 		CB78FB29213920BF00D6A4CA /* LDCommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB78FB28213920BF00D6A4CA /* LDCommonViewController.m */; };
+		CB78FB76213E6E7800D6A4CA /* MarqueeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB78FB75213E6E7800D6A4CA /* MarqueeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		CB78FB2421391A0700D6A4CA /* MarqueeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarqueeViewController.m; sourceTree = "<group>"; };
 		CB78FB27213920BF00D6A4CA /* LDCommonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDCommonViewController.h; sourceTree = "<group>"; };
 		CB78FB28213920BF00D6A4CA /* LDCommonViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LDCommonViewController.m; sourceTree = "<group>"; };
+		CB78FB74213E6E7800D6A4CA /* MarqueeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarqueeView.h; sourceTree = "<group>"; };
+		CB78FB75213E6E7800D6A4CA /* MarqueeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarqueeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +154,8 @@
 			children = (
 				CB78FB2321391A0700D6A4CA /* MarqueeViewController.h */,
 				CB78FB2421391A0700D6A4CA /* MarqueeViewController.m */,
+				CB78FB74213E6E7800D6A4CA /* MarqueeView.h */,
+				CB78FB75213E6E7800D6A4CA /* MarqueeView.m */,
 			);
 			path = MarqueeView;
 			sourceTree = "<group>";
@@ -293,6 +298,7 @@
 				CB78FAF2213918F700D6A4CA /* ViewController.m in Sources */,
 				CB78FAFD213918F700D6A4CA /* main.m in Sources */,
 				CB78FAEF213918F700D6A4CA /* AppDelegate.m in Sources */,
+				CB78FB76213E6E7800D6A4CA /* MarqueeView.m in Sources */,
 				CB78FB29213920BF00D6A4CA /* LDCommonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
