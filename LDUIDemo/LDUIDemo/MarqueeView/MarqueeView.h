@@ -18,11 +18,11 @@ typedef NS_ENUM(NSUInteger, LDScrollDirection) {
 @property (nonatomic, assign) LDScrollDirection scrollDirection;
 /** 字体，默认17 */
 @property (nonatomic, assign) CGFloat textFont;
-/** 定时器间隔（滚动速度），默认0.001 */
+/** 定时器间隔（滚动速度），默认0.001，越小越快 */
 @property (nonatomic, assign) CGFloat timeInterval;
-// 展示的文字数组
+/** 展示的文字数组 */
 @property (nonatomic, strong) NSArray *textArray;
-// 计数
-@property (nonatomic, assign) NSUInteger count;
+/** 文字距离左边的距离,默认10 */
+@property (nonatomic, assign) CGFloat marginLeft;
 
 @end

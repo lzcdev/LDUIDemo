@@ -9,16 +9,13 @@
 #import "MarqueeView.h"
 
 @interface MarqueeView()
+
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UILabel *textLabel;
-@property (nonatomic, strong) UILabel *textLabel2;
-
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat originX;
 @property (nonatomic, assign) CGFloat originY;
-@property (nonatomic, assign) NSUInteger count1;
-@property (nonatomic, assign) NSUInteger count2;
-
+@property (nonatomic, assign) NSUInteger count;
 
 @end
 
@@ -34,10 +31,11 @@
 }
 
 - (void)initConfig {
-    _scrollDirection = LDScrollDirectionVertical;
+    _scrollDirection = LDScrollDirectionHorizontal;
     _textFont = 17;
     _count = 0;
     _timeInterval = 0.001;
+    _marginLeft = 10;
 }
 
 - (void)initView {
@@ -46,22 +44,24 @@
     self.layer.masksToBounds = YES;
     _textLabel = [UILabel new];
     [self addSubview:_textLabel];
-    _textLabel2 = [UILabel new];
-    [self addSubview:_textLabel2];
+}
+
+- (void)loopVertical {
+    if (_originY + self.frame.size.height < 0) {
+        _originY = self.frame.size.height;
+        _count++;
+        if (_count == _textArray.count) {
+            _count = 0;
+        }
+        _width = [self getWidthWithText:_textArray[_count] height:self.frame.size.height font:_textFont];
+        _textLabel.text = _textArray[_count];
+    }
     
+    _textLabel.frame = CGRectMake(_marginLeft, _originY-=0.01, _width, self.frame.size.height);
     
 }
-//- (void)loop1 {
-//    _count2++;
-//        _textLabel2.frame = CGRectMake(_count2, 0, 100, self.frame.size.height);
-//
-//    NSLog(@"CADisplarLink=%zd----%f",_count2,_textLabel2.frame.origin.x);
-//}
-- (void)loop {
-//    _count1++;
-//    _textLabel.frame = CGRectMake(_count1, 0, 100, self.frame.size.height);
-//
-//    NSLog(@"NSTimer=%zd----%f",_count1, _textLabel.frame.origin.x);
+
+- (void)loopHorizontal {
     if (_originX + _width < 0) {
         _originX = self.frame.size.width;
         _count++;
@@ -70,46 +70,37 @@
         }
         _width = [self getWidthWithText:_textArray[_count] height:self.frame.size.height font:_textFont];
         _textLabel.text = _textArray[_count];
-        _textLabel.backgroundColor = [UIColor greenColor];
     }
-
-    _textLabel.frame = CGRectMake(_originX-=0.1, 0, _width, self.frame.size.height);
-        
-   
+    
+    _textLabel.frame = CGRectMake(_originX-=0.01, 0, _width, self.frame.size.height);
+    
 }
 
+- (void)setScrollDirection:(LDScrollDirection)scrollDirection {
+    _scrollDirection = scrollDirection;
+    [self setTextLabel];
+    
+}
 
+- (void)setMarginLeft:(CGFloat)marginLeft {
+    _marginLeft = marginLeft;
+}
 
 - (void)setTextArray:(NSArray *)textArray {
     _textArray = textArray;
     if (_textArray.count == 0) {
         return;
     }
-    
     _textLabel.text = _textArray[_count];
     
     [self setTextLabel];
-    if (!_timer) {
-        _timer = [NSTimer timerWithTimeInterval:_timeInterval target:self selector:@selector(loop) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    }
     
-//    CADisplayLink *link = [CADisplayLink displayLinkWithTarget:self selector:@selector(loop1)];
-//    [link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     
 }
 
 - (void)setTimeInterval:(CGFloat)timeInterval {
     _timeInterval = timeInterval;
     [self setTextLabel];
-    
-    if (_timer) {
-        [_timer invalidate];
-        _timer = nil;
-    }
-    _timer = [NSTimer timerWithTimeInterval:_timeInterval target:self selector:@selector(loop) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    
 }
 
 - (void)setTextFont:(CGFloat)textFont {
@@ -119,19 +110,28 @@
 }
 
 - (void)setTextLabel {
+    
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    
     _width = [self getWidthWithText:_textArray[_count] height:self.frame.size.height font:_textFont];
     
     switch (_scrollDirection) {
         case LDScrollDirectionVertical:
-            _textLabel.frame = CGRectMake(_originX, 0, _width, self.frame.size.height);
+            _textLabel.frame = CGRectMake(0, _originY, _width, self.frame.size.height);
+            _timer = [NSTimer timerWithTimeInterval:_timeInterval target:self selector:@selector(loopVertical) userInfo:nil repeats:YES];
             break;
         case LDScrollDirectionHorizontal:
-            _textLabel.frame = CGRectMake(0, _originY, _width, self.frame.size.height);
+            _textLabel.frame = CGRectMake(_originX, 0, _width, self.frame.size.height);
+            _timer = [NSTimer timerWithTimeInterval:_timeInterval target:self selector:@selector(loopHorizontal) userInfo:nil repeats:YES];
+            
             break;
         default:
             break;
     }
-    
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
 /**
